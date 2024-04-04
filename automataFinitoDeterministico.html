@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autómata Finito Determinista</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
+<style>
+  #network {
+    width: 600px;
+    height: 400px;
+    border: 1px solid lightgray;
+  }
+</style>
+</head>
+<body>
+<h2>Autómata Finito Determinista</h2>
+
+<div id="network"></div>
+
+<div>
+  <label for="cadenaInput">Ingrese una cadena:</label>
+  <input type="text" id="cadenaInput">
+  <button onclick="verificarCadena()">Verificar</button>
+</div>
+
+<div id="resultado"></div>
+
+<script>
+// Datos del autómata, grafo (grafico)
+const nodos = new vis.DataSet([
+  { id: 'q0', label: '->q0', color: '#FF5733' },
+  { id: 'q1', label: 'q1', color: '#33FF77' },
+  { id: 'q2', label: 'q2*', color: '#3377FF' }
+]);
+
+const aristas = new vis.DataSet([
+  { from: 'q0', to: 'q1', label: 'a', arrows: 'to' },
+  { from: 'q0', to: 'q2', label: 'b', arrows: 'to' },
+  { from: 'q1', to: 'q2', label: 'a', arrows: 'to' },
+  { from: 'q1', to: 'q1', label: 'b', arrows: 'to' },
+  { from: 'q2', to: 'q0', label: 'a', arrows: 'to' },
+  { from: 'q2', to: 'q1', label: 'b', arrows: 'to' }
+]);
+
+const datos = {
+  nodes: nodos,
+  edges: aristas
+};
+
+const contenedor = document.getElementById('network');
+const network = new vis.Network(contenedor, datos, {});
+
+// Función para verificar si la cadena es aceptada
+function verificarCadena() {
+  const cadenaInput = document.getElementById('cadenaInput').value;
+  let estadoActual = 'q0';
+  const alfabeto = ['a', 'b'];
+  const transiciones = {
+    'q0': { 'a': 'q1', 'b': 'q2' },
+    'q1': { 'a': 'q2', 'b': 'q1' },
+    'q2': { 'a': 'q0', 'b': 'q1' }
+  };
+
+  for (let i = 0; i < cadenaInput.length; i++) {
+    const simbolo = cadenaInput[i];
+    if (!alfabeto.includes(simbolo)) {
+      document.getElementById('resultado').innerText = 'La cadena contiene símbolos inválidos.';
+      return;
+    }
+    estadoActual = transiciones[estadoActual][simbolo];
+  }
+  const resultado = estadoActual === 'q2' ? 'Cadena aceptada.' : 'Cadena rechazada.';
+  document.getElementById('resultado').innerText = resultado;
+}
+</script>
+
+</body>
+</html>
