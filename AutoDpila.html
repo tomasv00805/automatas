@@ -1,0 +1,87 @@
+<script>
+    /*
+    Un autómata de pila cuenta con una cinta de entrada
+    y un mecanismo de control que puede encontrarse en uno de
+    entre un número finito de estados.
+    Uno de estos estados se designa cómo estado inicial y además
+    algunos estados se llaman de aceptación o finales
+    */ 
+    </script>
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Deterministic Pushdown Automaton Simulator</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            #mynetwork {
+                width: 600px;
+                height: 400px;
+                border: 1px solid lightgray;
+            }
+        </style>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>Deterministic Pushdown Automaton Simulator</h1>
+        <label for="input">Enter Input:</label>
+        <input type="text" id="input">
+        <button onclick="step()">Step</button>
+        <button onclick="run()">Run</button>
+        <div id="output"></div>
+        <div id="mynetwork"></div>
+    
+        <script>
+            // Definición de la clase del autómata de pila
+            class PushdownAutomaton {
+                // Métodos del autómata de pila...
+            }
+    
+            // Definición de un autómata de pila de ejemplo
+            const automaton = new PushdownAutomaton(
+                // Definición del autómata...
+            );
+    
+            // Función para ejecutar un paso en el simulador
+            function step() {
+                // Ejecución de un paso...
+                updateGraph();
+            }
+    
+            // Función para ejecutar el simulador hasta el final
+            function run() {
+                // Ejecución hasta el final...
+                updateGraph();
+            }
+    
+            // Función para actualizar el grafo
+            function updateGraph() {
+                const container = document.getElementById('mynetwork');
+    
+                // Definir nodos del grafo
+                const nodes = new vis.DataSet([
+                    { id: 1, label: 'q0' },
+                    { id: 2, label: 'q1' },
+                    // Agregar más nodos según sea necesario
+                ]);
+    
+                // Definir aristas del grafo
+                const edges = new vis.DataSet([
+                    { from: 1, to: 2, label: 'a,A/B' },
+                    { from: 2, to: 1, label: 'b,B/ε' },
+                    // Agregar más aristas según sea necesario
+                ]);
+    
+                const data = { nodes, edges };
+                const options = {};
+                const network = new vis.Network(container, data, options);
+            }
+        </script>
+    </body>
+    </html>
+    
