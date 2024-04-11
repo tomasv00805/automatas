@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Máquinas de Turing</title>
+        <script type="text/javascript" src="scripts/jquery.js"></script>
+        <script type="text/javascript" src="scripts/bootstrap.js"></script>
+        <script type="text/javascript" src="scripts/turing.js"></script>
+        <script type="text/javascript" src="scripts/ui.js"></script>
+        <script type="text/javascript" src="scripts/modal.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/modal.css">
+        <link rel="stylesheet" type="text/css" href="css/fontawesome.css">        
+        <style>
+            #network {
+              width: 600px;
+              height: 400px;
+              border: 1px solid lightgray;
+            }
+          </style>
+    </head>
+    <body>
+      <!--
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-3">Máquinas de Turing</h1>
+                <p class="lead">Simulador de máquinas de Turing</p>
+                <hr class="my-4">
+              </div>
+        </div>
+        -->
+        <div class="sticky-top bg-white">
+            <h1 class="text-center">
+                <strong id="etiqueta">Sumador</strong>
+            </h1>
+          </div>
+            <center>
+              <div class="d-block">
+                  <div class="col-6 my-3">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Cadena" id="cadena">
+                        <span class="input-group-btn">
+                          <button class="btn btn-info" type="button" id="cargar" data-toggle="popover1" title="Error de entrada"  data-content="La cadena está vacía." data-placemente="right" data-trigger="focus">Cargar</button>
+                          <button class="btn btn-secondary" id="info"><strong>?</strong></button>
+                        </span>                                  
+                      </div>
+                  </div>  
+                  <div class="col-3 my-4">
+                      <p class="lead">Contador: <span id="contador">0</span> | Estado: <span id="estado">0</span></p>
+                      
+                      <div class="slidecontainer">
+                        Velocidad:<br>
+                        <input type="range" min="0" max="1000" value="500"  step="100"class="slider" id="rango"><p></p>
+                      </div>
+                      <div class="btn-group" role="group" aria-label="Funciones">
+                            <button class="btn btn-danger" id="evaluar" content="1">Evaluar</button>
+                            <button class="btn btn-warning" id="evaluar" content="1" onclick="Stop();">Detener</button>
+                      </div>                      
+                      
+                  </div>
+              </div>
+            </center>
+      </div>
+
+
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="tab1" role="tabpanel">
+                <center>
+                    <div class="d-inline ">
+                              <div class="col-10">
+                                  <table id="tabla1" class="table table-hover text-center table-responsive">
+                                      <tbody>
+                                      </tbody>
+                                    </table>
+                              </div>
+                    </div>
+                  </center>
+            </div>
+
+            <div class="tab-pane" id="tab2" role="tabpanel">
+                <center>
+                    <div class="d-inline ">
+                        <div class="col-10">
+                                <table id="tabla2" class="table table-hover text-center table-responsive">
+                                    <tbody>
+                                    </tbody>
+                                  </table>
+                              </div>
+                    </div>
+                  </center>
+            </div>
+
+            <div class="tab-pane" id="tab3" role="tabpanel">
+                <center>
+                    <div class="d-inline ">
+                        <div class="col-10">
+                            <table id="tabla3" class="table table-hover text-center table-responsive">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>    
+                    </div>
+                  </center>
+            </div>
+
+            <div class="tab-pane" id="tab4" role="tabpanel">
+                <center>
+                        <div class="d-inline ">
+                                <div class="col-10">
+                                    <table id="tabla4" class="table table-hover text-center table-responsive">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>    
+                            </div>
+                  </center>
+            </div>
+
+            <div class="tab-pane" id="tab5" role="tabpanel">
+                <center>
+                        <div class="d-inline ">
+                                <div class="col-10">
+                                    <table id="tabla5" class="table table-hover text-center table-responsive">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>    
+                            </div>
+                  </center>
+            </div>
+
+      </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modalText" class="lead"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="instrucciones1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle"><h2>Sumador</h2></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Detalles:</h5>
+                        <p class="text-center">
+                            Sumador de base unaria. Esta máquina determina el resultado de una suma entre N números en base unaria.
+                        </p>
+
+                        <h5>Uso:</h5>
+                        <p class="text-center">
+                            <i>Término</i>+<i>Término</i>=
+                        </p>
+                        <h5>Ejemplos:</h5>
+                        <p class="text-center">
+                            111+11=<br>
+                            1+1+1+1+1=<br>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div id="resultado">
+                           
+                        </div>
+                        <div id="network"></div>
+                        <script>
+                            // Datos del autómata, grafo (grafico)
+                            const nodos = new vis.DataSet([
+                              { id: 'q0', label: '->q0', color: '#FF5733' },
+                              { id: 'q1', label: 'q1', color: '#33FF77' },
+                              { id: 'q2', label: 'q2', color: '#3377FF' },
+                              { id: 'q3', label: 'q3', color: '#33FF77' , borderWidth: 3},
+                              { id: 'q4', label: 'q4', color: '#3377FF' }
+                            ]);
+                            
+                            const aristas = new vis.DataSet([
+                              { from: 'q0', to: 'q1', label: '1/X R', arrows: 'to' },
+                              { from: 'q0', to: 'q0', label: '+/+ R', arrows: 'to' },
+                              { from: 'q0', to: 'q3', label: '=/= R', arrows: 'to' },
+                              { from: 'q1', to: 'q2', label: 'ß/1 L', arrows: 'to' },
+                              { from: 'q1', to: 'q1', label: '1/1 R || =/= R', arrows: 'to' },
+                              { from: 'q1', to: 'q4', label: '+/+ R', arrows: 'to' },
+                              { from: 'q2', to: 'q2', label: '1/1 L || +/+ L || =/=L', arrows: 'to' },
+                              { from: 'q2', to: 'q0', label: 'X/1 R', arrows: 'to' }
+                            ]);
+                            
+                            const datos = {
+                              nodes: nodos,
+                              edges: aristas
+                            };
+                            
+                            const contenedor = document.getElementById('network');
+                            const network = new vis.Network(contenedor, datos, {});
+                        </script>    
+                    </div>
+                </div>
+            </div>
+
+    </body>
+</html>
