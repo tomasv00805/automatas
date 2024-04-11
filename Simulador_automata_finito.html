@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Tailwind</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="flex justify-between space-x-4">
+        <div class="flex flex-col space-y-2">
+            <div class="font-bold">Alfabeto (Σ)</div>
+            <input type="text" id="alfabeto" value="0,1" class="border border-gray-400 rounded px-2 py-1">
+            <div class="font-bold">Estado inicial</div>
+            <input type="text" id="estadoInicial" value="q0" class="border border-gray-400 rounded px-2 py-1">
+            <div class="font-bold">Estado final</div>
+            <input type="text" id="estadoFinal" value="q1" class="border border-gray-400 rounded px-2 py-1">
+        </div>
+        <div>
+            <div class="font-bold">Transiciones</div>
+            <textarea id="transiciones" rows="5" class="border border-gray-400 rounded px-2 py-1 w-64">q0,0,q0
+q0,1,q1
+q1,1,q1
+q1,0,q1</textarea>
+        </div>
+        <div>
+            <div class="font-bold">Cadena</div>
+            <input type="text" id="cadena" value="01100" class="border border-gray-400 rounded px-2 py-1">
+        </div>
+    </div>
+    <div>
+        <button onclick="crearAutomata()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Generar Autómata
+        </button>
+    </div>
+    <div id="network"></div>
+    <div>
+        <label for="cadenaInput">Ingrese una cadena:</label>
+        <input type="text" id="cadenaInput">
+        <button onclick="verificarCadena()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Verificar
+        </button>
+    </div>
+    <div id="resultado"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
+    <script>
+        // Función para obtener los datos de los inputs y textarea
+        function obtenerDatos() {
+            const alfabeto = document.getElementById('alfabeto').value;
+            const estadoInicial = document.getElementById('estadoInicial').value;
+            const estadoFinal = document.getElementById('estadoFinal').value;
+            const transiciones = document.getElementById('transiciones').value.split('\n').map(transicion => transicion.split(','));
+            const cadena = document.getElementById('cadena').value;
+
+            return { alfabeto, estadoInicial, estadoFinal, transiciones, cadena };
+        }
+
+        // Función para crear el autómata
+        function crearAutomata() {
+            const { alfabeto, estadoInicial, estadoFinal, transiciones } = obtenerDatos();
+
+            const nodos = [];
+            const aristas = [];
+
+            transiciones.forEach(transicion => {
+                const from = transicion[0];
+                const to = transicion[2];
+                const label = transicion[1];
+                nodos.push({ id: from, label: from });
+                nodos.push({ id: to, label: to });
+
+                aristas.push({ from, to, label, arrows: 'to' });
+            });
+
+            const datos = {
+                nodes: nodos,
+                edges: aristas
+            };
+
+            const contenedor = document.getElementById('network');
+            const network = new vis.Network(contenedor, datos, {});
+        }
+
+        // Función para verificar la cadena
+        function verificarCadena() {
+            const cadenaInput = document.getElementById('cadenaInput').value;
+            // Aquí puedes implementar la lógica para verificar la cadena con el autómata
+        }
+    </script>
+</body>
+</html>
