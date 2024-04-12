@@ -1,2 +1,4 @@
-# automatas
-# automatas
+Los automatas que se encutran funcionando son el AFNe, AutomataFinitoDeterministico y Turing
+AutomataFinitoDeterministico: se debe cargar una cadena la cual cumpla con el automata planteado, una vez cargada simplemente hay que hacer click en verificar y aparecera un mensaje que dira si es una cadena valida o no, en el caso de tener un simbolo invalido tambien reportara eso.
+AFNe: se debe cargar una cadena la cual cumpla con el automata planteado, una vez cargada simplemente hay que hacer click en verificar y aparecera un mensaje que dira si es una cadena valida o no, en el caso de tener un simbolo invalido tambien reportara eso.
+Turing: Para la maquina de turin se debe cargar una cadena conformada de 1 y + y por ultimo un =. luego de colocar la cadena se debe dar al boton que dice "Cargar", una vez cargada la cadena se oprime el voton evaluar. Una vez terminado el recorrido de la maquina de turing un cartel aparecera diciendo que la cadena es valida y podras visualizar tu resultado
